@@ -3,10 +3,14 @@ import { CreatePrivilegeDto } from './dto/create-privilege.dto';
 import { UpdatePrivilegeDto } from './dto/update-privilege.dto';
 import { In, Repository } from 'typeorm';
 import { Privilege } from './entities/privilege.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PrivilegesService {
-  constructor(private readonly privilegeRepository: Repository<Privilege>) {}
+  constructor(
+    @InjectRepository(Privilege)
+    private readonly privilegeRepository: Repository<Privilege>,
+  ) {}
 
   async create(createPrivilegeDto: CreatePrivilegeDto) {
     const newPrivilege = this.privilegeRepository.create(createPrivilegeDto);

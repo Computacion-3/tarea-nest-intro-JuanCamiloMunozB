@@ -16,6 +16,10 @@ export class Privilege {
   name: string;
 
   @ManyToMany(() => Role, (role) => role.privileges, { cascade: true })
-  @JoinTable()
+  @JoinTable({
+    name: 'roles_privileges', // nombre de la tabla intermedia
+    joinColumn: { name: 'privilege_id', referencedColumnName: 'id' }, // columna que referencia a Privilege
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' }, // columna que referencia a Role
+  })
   roles: Role[];
 }

@@ -1,14 +1,8 @@
-import { Privilege } from 'src/privileges/entities/privilege.entity';
-import { User } from 'src/users/entities/user.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToMany,
-} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { RolePermission } from './role-permission.entity';
 
-@Entity()
+@Entity('roles')
 export class Role {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,12 +10,19 @@ export class Role {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description: string;
 
   @OneToMany(() => User, (user) => user.role)
   users: User[];
 
-  @ManyToMany(() => Privilege, (privilege) => privilege.roles)
-  privileges: Privilege[];
+  @OneToMany(
+    () => RolePermission,
+    (rolePermission) => rolePermission.permission,
+  )
+  rolePermissions: RolePermission[];
+
+  // Mapear una relación usando ManyToMany. Util si no queremos que la tabla intermedia no tenga mas columnas
+  // @ManyToMany(() => Permission, (permission) => permission.roles)
+  // permissions: Permission[];
 }

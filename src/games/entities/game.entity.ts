@@ -1,11 +1,5 @@
-import { User } from 'src/users/entities/user.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('games')
 export class Game {
@@ -13,13 +7,19 @@ export class Game {
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
-  @CreateDateColumn()
-  releaseDate: Date;
+  @Column({ type: 'text' })
+  description: string;
 
   @Column()
-  genre: string;
+  min_players: number;
+
+  @Column()
+  max_players: number;
+
+  @Column()
+  category: string;
 
   @ManyToOne(() => User, (user) => user.games, { eager: true })
   createdBy: User;

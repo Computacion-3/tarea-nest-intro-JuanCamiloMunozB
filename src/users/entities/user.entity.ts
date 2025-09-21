@@ -1,5 +1,5 @@
-import { Game } from 'src/games/entities/game.entity';
-import { Role } from 'src/roles/entities/role.entity';
+import { Game } from '../../games/entities/game.entity';
+import { Role } from '../../roles/entities/role.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -24,7 +24,7 @@ export class User {
   @Column()
   passwordHash: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   bio: string;
 
   @CreateDateColumn()
